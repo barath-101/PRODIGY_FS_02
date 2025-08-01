@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Authentication System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .dashboard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .dashboard-header {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .welcome-message {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .user-info {
+            color: #666;
+            font-size: 16px;
+            min-height: 80px;
+        }
+        
+        .logout-button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .logout-button:hover {
+            background: #c82333;
+        }
+        
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1 class="welcome-message">Welcome to Your Dashboard!</h1>
+            <div class="user-info" id="userInfo">
+                <div class="loader"></div>
+            </div>
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    
+    <script>
+        // Get user email from sessionStorage (set after login)
+        const userEmail = sessionStorage.getItem('userEmail');
+        if (!userEmail) {
+            window.location.href = 'login.html';
+        } else {
+            fetch(`http://localhost:8080/api/users/profile?email=${encodeURIComponent(userEmail)}`)
+                .then(res => res.json())
+                .then(user => {
+                    document.getElementById('userInfo').innerHTML = `
+                        <p><strong>Name:</strong> ${user.first_name} ${user.last_name}</p>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Date of Birth:</strong> ${new Date(user.date_of_birth).toLocaleDateString()}</p>
+                        <p><strong>Member since:</strong> ${user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'}</p>
+                    `;
+                })
+                .catch(() => {
+                    document.getElementById('userInfo').innerHTML = '<p style="color:red;">Failed to load user info.</p>';
+                });
+        }
+
+        function logout() {
+            sessionStorage.removeItem('userEmail');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
