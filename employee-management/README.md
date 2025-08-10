@@ -54,7 +54,8 @@ This system provides a comprehensive employee management solution with role-base
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/employee-management.git
+git clone https://github.com/barath-101/PRODIGY_FS_02.git
+
 cd employee-management
 ```
 
