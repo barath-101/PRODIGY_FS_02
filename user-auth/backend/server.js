@@ -11,14 +11,14 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'auth_db',
-    password: 'barathisgood_incoding', // <-- replace with your actual password
+    password: 'barathisgood_incoding',
     port: 5432,
 });
 
 app.post('/api/users/register', async (req, res) => {
     const { firstName, lastName, email, dateOfBirth, password } = req.body;
     try {
-        const hashedPassword = await bcrypt.hash(password, 10); // 10 salt rounds
+        const hashedPassword = await bcrypt.hash(password, 10); 
         await pool.query(
             'INSERT INTO users (first_name, last_name, email, date_of_birth, password) VALUES ($1, $2, $3, $4, $5)',
             [firstName, lastName, email, dateOfBirth, hashedPassword]
