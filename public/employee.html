@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - Employee Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard">
+    <header class="header">
+        <div class="header-content">
+            <h1>Employee Dashboard</h1>
+            <div class="user-info">
+                <span id="employeeName">Welcome, Employee</span>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="profile-card">
+            <div class="profile-header">
+                <h2 id="fullName">Loading...</h2>
+                <p id="position">Position</p>
+            </div>
+            
+            <div class="profile-details" id="profileDetails">
+                <!-- Profile details will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="employee.js"></script>
+</body>
+</html>
